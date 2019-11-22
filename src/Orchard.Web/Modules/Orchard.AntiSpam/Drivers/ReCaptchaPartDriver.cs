@@ -84,12 +84,12 @@ namespace Orchard.AntiSpam.Drivers {
                 if (!responseModel.Success) {
                     foreach (var errorCode in responseModel.ErrorCodes) {
                         if(errorCode == "missing-input-response") {
-                            updater.AddModelError("", T("Please prove that you are not a bot."));
+                            updater.AddModelError("ReCaptchaValidationError", T("Please prove that you are not a bot."));
                             _notifier.Error(T("Please prove that you are not a bot."));
                         }
                         else {
                             Logger.Information("An error occurred while submitting a reCaptcha: " + errorCode);
-                            updater.AddModelError("", T("An error occurred while submitting a reCaptcha."));
+                            updater.AddModelError("ReCaptchaValidationError", T("An error occurred while submitting a reCaptcha."));
                             _notifier.Error(T("An error occurred while submitting a reCaptcha."));
                         }
                     }
@@ -97,7 +97,7 @@ namespace Orchard.AntiSpam.Drivers {
             }
             catch (Exception e) {
                 Logger.Error(e, "An unexcepted error occurred while submitting a reCaptcha.");
-                updater.AddModelError("", T("There was an error while validating the Captcha."));
+                updater.AddModelError("ReCaptchaValidationError", T("There was an error while validating the Captcha."));
                 _notifier.Error(T("There was an error while validating the Captcha."));
             }
 
